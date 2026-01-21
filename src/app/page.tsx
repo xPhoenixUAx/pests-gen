@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 import {
   ShieldCheck,
   Leaf,
@@ -8,93 +8,127 @@ import {
   Star,
   Phone,
   ArrowRight,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { EmojiIcon } from '@/components/emoji-icon';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { EmojiIcon } from "@/components/emoji-icon";
 import {
   COMPANY_NAME,
   PEST_SERVICES,
   REVIEWS,
   WILDLIFE_SERVICES,
-} from '@/lib/constants';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { EcoShieldIcon } from '@/components/icons/eco-shield-icon';
+} from "@/lib/constants";
+import { EcoShieldIcon } from "@/components/icons/eco-shield-icon";
+
+const AVATAR_STYLES = [
+  "bg-gradient-to-br from-primary/25 to-primary/10 text-primary",
+  "bg-gradient-to-br from-emerald-500/25 to-emerald-500/10 text-emerald-700",
+  "bg-gradient-to-br from-amber-500/25 to-amber-500/10 text-amber-700",
+  "bg-gradient-to-br from-sky-500/25 to-sky-500/10 text-sky-700",
+  "bg-gradient-to-br from-violet-500/25 to-violet-500/10 text-violet-700",
+] as const;
+
+function hashString(value: string) {
+  let hash = 0;
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash * 31 + value.charCodeAt(index)) >>> 0;
+  }
+  return hash;
+}
+
+function getInitials(name: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return "?";
+  if (parts.length === 1) return parts[0].slice(0, 1).toUpperCase();
+  return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+}
 
 export default function Home() {
   const getServiceEmoji = (item: string) => {
     const text = item.toLowerCase();
-    if (text.includes('bat')) return '1f987';
-    if (text.includes('mice') || text.includes('mouse')) return '1f42d';
-    if (text.includes('rat')) return '1f400';
-    if (text.includes('squirrel')) return '1f43f-fe0f';
-    if (text.includes('raccoon')) return '1f99d';
-    if (text.includes('skunk')) return '1f9a8';
-    if (text.includes('snake')) return '1f40d';
-    if (text.includes('bird')) return '1f426';
-    if (text.includes('mole')) return '1f573-fe0f';
-    if (text.includes('opossum') || text.includes('possum')) return '1f43e';
-    if (text.includes('rabbit')) return '1f407';
+    if (text.includes("bat")) return "1f987";
+    if (text.includes("mice") || text.includes("mouse")) return "1f42d";
+    if (text.includes("rat")) return "1f400";
+    if (text.includes("squirrel")) return "1f43f-fe0f";
+    if (text.includes("raccoon")) return "1f99d";
+    if (text.includes("skunk")) return "1f9a8";
+    if (text.includes("snake")) return "1f40d";
+    if (text.includes("bird")) return "1f426";
+    if (text.includes("mole")) return "1f573-fe0f";
+    if (text.includes("opossum") || text.includes("possum")) return "1f43e";
+    if (text.includes("rabbit")) return "1f407";
 
-    if (text.includes('ant')) return '1f41c';
-    if (text.includes('roach')) return '1fab3';
-    if (text.includes('spider')) return '1f577-fe0f';
-    if (text.includes('wasp') || text.includes('hornet')) return '1f41d';
-    if (text.includes('bee')) return '1f41d';
-    if (text.includes('mosquito')) return '1f99f';
-    if (text.includes('fly')) return '1fab0';
-    if (text.includes('flea') || text.includes('tick')) return '1fab2';
-    if (text.includes('termite')) return '1f41c';
-    if (text.includes('bed bug') || text.includes('bedbug')) return '1f41e';
-    if (text.includes('beetle')) return '1fab2';
-    if (text.includes('cricket')) return '1f997';
-    if (text.includes('moth')) return '1f98b';
-    if (text.includes('slug') || text.includes('snail')) return '1f40c';
+    if (text.includes("ant")) return "1f41c";
+    if (text.includes("roach")) return "1fab3";
+    if (text.includes("spider")) return "1f577-fe0f";
+    if (text.includes("wasp") || text.includes("hornet")) return "1f41d";
+    if (text.includes("bee")) return "1f41d";
+    if (text.includes("mosquito")) return "1f99f";
+    if (text.includes("fly")) return "1fab0";
+    if (text.includes("flea") || text.includes("tick")) return "1fab2";
+    if (text.includes("termite")) return "1f41c";
+    if (text.includes("bed bug") || text.includes("bedbug")) return "1f41e";
+    if (text.includes("beetle")) return "1fab2";
+    if (text.includes("cricket")) return "1f997";
+    if (text.includes("moth")) return "1f98b";
+    if (text.includes("slug") || text.includes("snail")) return "1f40c";
 
-    return '1f43e';
+    return "1f43e";
   };
 
   const features = [
     {
       icon: <ShieldCheck className="w-8 h-8 text-primary" />,
-      title: 'Professional & Reliable',
-      description: 'Our certified technicians deliver top-quality, dependable service every time.',
+      title: "Professional & Reliable",
+      description:
+        "Our certified technicians deliver top-quality, dependable service every time.",
     },
     {
       icon: <Leaf className="w-8 h-8 text-primary" />,
-      title: 'Eco-Friendly Solutions',
-      description: 'We use safe, sustainable methods to protect your family and the environment.',
+      title: "Eco-Friendly Solutions",
+      description:
+        "We use safe, sustainable methods to protect your family and the environment.",
     },
     {
       icon: <Users className="w-8 h-8 text-primary" />,
-      title: 'Family-Owned Values',
-      description: 'As a local business, we treat every customer like a neighbor and a friend.',
+      title: "Family-Owned Values",
+      description:
+        "As a local business, we treat every customer like a neighbor and a friend.",
     },
     {
       icon: <Smile className="w-8 h-8 text-primary" />,
-      title: 'Visible Results',
-      description: 'We guarantee effective solutions that solve your pest problems for good.',
+      title: "Visible Results",
+      description:
+        "We guarantee effective solutions that solve your pest problems for good.",
     },
   ];
 
   const services = [
     {
-      title: 'Wildlife Removal',
+      title: "Wildlife Removal",
       description:
-        'Humane and effective removal of unwanted wildlife from your property.',
-      link: '/wildlife-removal',
+        "Humane and effective removal of unwanted wildlife from your property.",
+      link: "/wildlife-removal",
       items: WILDLIFE_SERVICES.slice(0, 4).map((s) => s.name),
-      image: { imageUrl: '/images/ui/wildlife-removal.jpg', description: 'Wildlife removal service.', imageHint: '' },
+      image: {
+        imageUrl: "/images/ui/wildlife-removal.jpg",
+        description: "Wildlife removal service.",
+        imageHint: "",
+      },
     },
     {
-      title: 'Pest Control',
+      title: "Pest Control",
       description:
-        'Comprehensive solutions for common household pests, tailored to your needs.',
-      link: '/pest-control',
+        "Comprehensive solutions for common household pests, tailored to your needs.",
+      link: "/pest-control",
       items: PEST_SERVICES.slice(0, 4).map((s) => s.name),
-      image: { imageUrl: '/images/ui/pest-control.jpg', description: 'Pest control service.', imageHint: '' },
+      image: {
+        imageUrl: "/images/ui/pest-control.jpg",
+        description: "Pest control service.",
+        imageHint: "",
+      },
     },
   ];
 
@@ -111,8 +145,9 @@ export default function Home() {
               Peace of Mind, Guaranteed.
             </h1>
             <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mx-auto md:mx-0">
-              {COMPANY_NAME} provides fast, affordable, and eco-friendly solutions
-              to protect your home and family from unwanted pests and wildlife.
+              {COMPANY_NAME} provides fast, affordable, and eco-friendly
+              solutions to protect your home and family from unwanted pests and
+              wildlife.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
               <Button asChild size="lg" className="font-bold">
@@ -121,9 +156,7 @@ export default function Home() {
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link href="/wildlife-removal">
-                  Explore Services
-                </Link>
+                <Link href="/wildlife-removal">Explore Services</Link>
               </Button>
             </div>
           </div>
@@ -162,8 +195,9 @@ export default function Home() {
                 </h2>
               </div>
               <p className="text-muted-foreground text-lg">
-                We're not just another pest control company. We're your neighbors,
-                committed to providing exceptional service with a personal touch.
+                We're not just another pest control company. We're your
+                neighbors, committed to providing exceptional service with a
+                personal touch.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {features.map((feature) => (
@@ -217,22 +251,20 @@ export default function Home() {
                   <CardTitle className="font-headline text-2xl">
                     {service.title}
                   </CardTitle>
-                  <p className="text-muted-foreground">
-                    {service.description}
-                  </p>
-                   <ul className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
-                     {service.items.map((item) => (
-                        <li key={item} className="flex items-center gap-2">
-                          <EmojiIcon
-                            unified={getServiceEmoji(item)}
-                            label={item}
-                            size={16}
-                            className="w-4 shrink-0"
-                          />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  <p className="text-muted-foreground">{service.description}</p>
+                  <ul className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+                    {service.items.map((item) => (
+                      <li key={item} className="flex items-center gap-2">
+                        <EmojiIcon
+                          unified={getServiceEmoji(item)}
+                          label={item}
+                          size={16}
+                          className="w-4 shrink-0"
+                        />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                   <Button asChild variant="link" className="p-0">
                     <Link href={service.link}>
                       Learn More <ArrowRight className="ml-2 h-4 w-4" />
@@ -258,23 +290,17 @@ export default function Home() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {REVIEWS.slice(0, 3).map((review, index) => {
-              const avatarImage = PlaceHolderImages.find(
-                (img) => img.id === review.avatarId
-              );
+              const avatarStyle =
+                AVATAR_STYLES[hashString(review.name) % AVATAR_STYLES.length];
               return (
                 <Card key={index}>
                   <CardContent className="p-6 space-y-4">
                     <div className="flex items-center gap-4">
                       <Avatar>
-                        {avatarImage && (
-                          <AvatarImage
-                            src={avatarImage.imageUrl}
-                            alt={review.name}
-                            data-ai-hint={avatarImage.imageHint}
-                          />
-                        )}
-                        <AvatarFallback>
-                          {review.name.charAt(0)}
+                        <AvatarFallback
+                          className={`font-semibold ring-1 ring-border/60 ${avatarStyle}`}
+                        >
+                          {getInitials(review.name)}
                         </AvatarFallback>
                       </Avatar>
                       <div>
@@ -285,8 +311,8 @@ export default function Home() {
                               key={i}
                               className={`w-4 h-4 ${
                                 i < Math.round(review.rating ?? 5)
-                                  ? 'fill-yellow-400 text-yellow-400'
-                                  : 'text-muted-foreground/30'
+                                  ? "fill-yellow-400 text-yellow-400"
+                                  : "text-muted-foreground/30"
                               }`}
                             />
                           ))}

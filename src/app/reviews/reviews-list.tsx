@@ -8,26 +8,39 @@ import {
   Tag,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { cn } from '@/lib/utils';
 import type { Review } from '@/lib/constants';
 
+const AVATAR_STYLES = [
+  'bg-gradient-to-br from-primary/25 to-primary/10 text-primary',
+  'bg-gradient-to-br from-emerald-500/25 to-emerald-500/10 text-emerald-700',
+  'bg-gradient-to-br from-amber-500/25 to-amber-500/10 text-amber-700',
+  'bg-gradient-to-br from-sky-500/25 to-sky-500/10 text-sky-700',
+  'bg-gradient-to-br from-violet-500/25 to-violet-500/10 text-violet-700',
+] as const;
+
+function hashString(value: string) {
+  let hash = 0;
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash * 31 + value.charCodeAt(index)) >>> 0;
+  }
+  return hash;
+}
+
+function getInitials(name: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return '?';
+  if (parts.length === 1) return parts[0].slice(0, 1).toUpperCase();
+  return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+}
+
 export function ReviewsList({ reviews }: { reviews: Review[] }) {
   const [visibleCount, setVisibleCount] = useState(4);
-
-  const avatarImages = useMemo(() => {
-    return new Map(
-      PlaceHolderImages.filter((img) => img.id.startsWith('avatar-')).map((img) => [
-        img.id,
-        img,
-      ])
-    );
-  }, []);
 
   const visibleReviews = reviews.slice(0, visibleCount);
   const hasMore = visibleCount < reviews.length;
@@ -35,9 +48,9 @@ export function ReviewsList({ reviews }: { reviews: Review[] }) {
   return (
     <div className="mt-8 space-y-4">
       {visibleReviews.map((review, index) => {
-        const avatarImage = avatarImages.get(review.avatarId);
         const accent =
           index % 3 === 0 ? 'bg-primary' : index % 3 === 1 ? 'bg-emerald-500' : 'bg-amber-500';
+        const avatarStyle = AVATAR_STYLES[hashString(review.name) % AVATAR_STYLES.length];
 
         return (
           <Card
@@ -49,14 +62,14 @@ export function ReviewsList({ reviews }: { reviews: Review[] }) {
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-6">
                 <div className="flex items-start gap-3 min-w-0">
                   <Avatar>
-                    {avatarImage && (
-                      <AvatarImage
-                        src={avatarImage.imageUrl}
-                        alt={review.name}
-                        data-ai-hint={avatarImage.imageHint}
-                      />
-                    )}
-                    <AvatarFallback>{review.name.charAt(0)}</AvatarFallback>
+                    <AvatarFallback
+                      className={cn(
+                        'font-semibold ring-1 ring-border/60',
+                        avatarStyle
+                      )}
+                    >
+                      {getInitials(review.name)}
+                    </AvatarFallback>
                   </Avatar>
                   <div className="min-w-0">
                     <p className="font-semibold truncate">{review.name}</p>
