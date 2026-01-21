@@ -36,13 +36,13 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className={cn(
-                'transition-colors hover:text-primary',
-                pathname === link.href ? 'text-primary' : 'text-muted-foreground'
-              )}
-            >
-              {link.label}
-            </Link>
+                className={cn(
+                  'transition-colors hover:text-primary',
+                  pathname === link.href ? 'text-primary' : 'text-foreground/80'
+                )}
+              >
+                {link.label}
+              </Link>
           ))}
         </nav>
         <div className="flex items-center gap-4 ml-auto">
