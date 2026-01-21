@@ -1,16 +1,10 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 import {
-  AlertTriangle,
   ArrowRight,
-  Bird,
-  CheckCircle,
   Droplets,
   Home,
-  Moon,
-  Mouse,
   PawPrint,
-  Rat,
   Search,
   ShieldAlert,
   Shovel,
@@ -18,140 +12,138 @@ import {
   Trash2,
   Construction,
   ShieldCheck,
-  Squirrel,
   TreePine,
   Volume2,
-  Worm,
   Zap,
-} from 'lucide-react';
-import type { Metadata } from 'next';
+  AlertTriangle,
+  CheckCircle,
+} from "lucide-react";
+import type { Metadata } from "next";
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { COMPANY_NAME } from '@/lib/constants';
+} from "@/components/ui/accordion";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { COMPANY_NAME } from "@/lib/constants";
+import { EmojiIcon } from "@/components/emoji-icon";
 
 export const metadata: Metadata = {
-  title: 'Humane Wildlife Removal',
+  title: "Humane Wildlife Removal",
   description: `Expert, humane removal of bats, raccoons, squirrels, and more. ${COMPANY_NAME} offers safe and effective wildlife control solutions.`,
 };
 
 export default function WildlifeRemovalPage() {
-  const heroImage = PlaceHolderImages.find((img) => img.id === 'hero-wildlife');
-  const wildlifeSectionImage = PlaceHolderImages.find(
-    (img) => img.id === 'service-wildlife'
-  );
   const wildlifeWeHandle = [
-    { name: 'Bats', icon: Moon, detail: 'Attics / Chimneys' },
-    { name: 'Mice', icon: Mouse, detail: 'Walls / Kitchens' },
-    { name: 'Rats', icon: Rat, detail: 'Basements / Garages' },
-    { name: 'Squirrels', icon: Squirrel, detail: 'Attics / Eaves' },
-    { name: 'Raccoons', icon: PawPrint, detail: 'Attics / Soffits' },
-    { name: 'Opossums', icon: TreePine, detail: 'Crawlspaces / Sheds' },
-    { name: 'Skunks', icon: ShieldAlert, detail: 'Under decks / Yards' },
-    { name: 'Birds', icon: Bird, detail: 'Vents / Chimneys' },
-    { name: 'Snakes', icon: Worm, detail: 'Garages / Yards' },
-    { name: 'Moles', icon: Shovel, detail: 'Lawns / Gardens' },
+    { name: "Bats", unified: "1f987", detail: "Attics / Chimneys" },
+    { name: "Mice", unified: "1f42d", detail: "Walls / Kitchens" },
+    { name: "Rats", unified: "1f400", detail: "Basements / Garages" },
+    { name: "Squirrels", unified: "1f43f-fe0f", detail: "Attics / Eaves" },
+    { name: "Raccoons", unified: "1f99d", detail: "Attics / Soffits" },
+    { name: "Opossums", unified: "1f43e", detail: "Crawlspaces / Sheds" },
+    { name: "Skunks", unified: "1f9a8", detail: "Under decks / Yards" },
+    { name: "Birds", unified: "1f426", detail: "Vents / Chimneys" },
+    { name: "Snakes", unified: "1f40d", detail: "Garages / Yards" },
+    { name: "Moles", unified: "1f573-fe0f", detail: "Lawns / Gardens" },
   ];
 
   const processSteps = [
     {
       icon: <Search className="w-8 h-8 text-primary" />,
-      title: '1. Inspection',
+      title: "1. Inspection",
       description:
-        'We conduct a thorough inspection of your property to identify the type of wildlife, entry points, and the extent of the issue.',
+        "We conduct a thorough inspection of your property to identify the type of wildlife, entry points, and the extent of the issue.",
     },
     {
       icon: <Trash2 className="w-8 h-8 text-primary" />,
-      title: '2. Humane Removal',
+      title: "2. Humane Removal",
       description:
-        'Using safe and humane techniques, we remove all wildlife from your home, ensuring their well-being.',
+        "Using safe and humane techniques, we remove all wildlife from your home, ensuring their well-being.",
     },
     {
       icon: <Construction className="w-8 h-8 text-primary" />,
-      title: '3. Exclusion',
+      title: "3. Exclusion",
       description:
-        'We seal all potential entry points with durable materials to prevent future wildlife from getting back inside.',
+        "We seal all potential entry points with durable materials to prevent future wildlife from getting back inside.",
     },
     {
       icon: <ShieldCheck className="w-8 h-8 text-primary" />,
-      title: '4. Prevention',
+      title: "4. Prevention",
       description:
-        'We provide cleanup/sanitization services and offer recommendations to make your property less attractive to wildlife.',
+        "We provide cleanup/sanitization services and offer recommendations to make your property less attractive to wildlife.",
     },
   ];
   const signCategories = [
     {
-      id: 'indoors',
-      label: 'Indoors',
+      id: "indoors",
+      label: "Indoors",
       icon: Home,
       items: [
         {
           icon: Volume2,
-          title: 'Noises in walls or attic',
-          description: 'Scratching, thumping, or scurrying (often louder at night).',
+          title: "Noises in walls or attic",
+          description:
+            "Scratching, thumping, or scurrying (often louder at night).",
         },
         {
           icon: ShieldAlert,
-          title: 'Unusual odors',
-          description: 'Musky smells or strong animal odor that comes and goes.',
+          title: "Unusual odors",
+          description:
+            "Musky smells or strong animal odor that comes and goes.",
         },
         {
           icon: Droplets,
-          title: 'Droppings, stains, or rub marks',
+          title: "Droppings, stains, or rub marks",
           description:
-            'Droppings, urine marks, or greasy rub marks near vents, soffits, or access points.',
+            "Droppings, urine marks, or greasy rub marks near vents, soffits, or access points.",
         },
         {
           icon: Home,
-          title: 'Nesting materials',
+          title: "Nesting materials",
           description:
-            'Shredded insulation, leaves, or debris in attics, vents, chimneys, or crawlspaces.',
+            "Shredded insulation, leaves, or debris in attics, vents, chimneys, or crawlspaces.",
         },
       ],
     },
     {
-      id: 'damage',
-      label: 'Damage',
+      id: "damage",
+      label: "Damage",
       icon: Zap,
       items: [
         {
           icon: Zap,
-          title: 'Chewed wires or structural damage',
+          title: "Chewed wires or structural damage",
           description:
-            'Gnaw marks on wood, disturbed insulation, or frayed wiring (a serious safety risk).',
+            "Gnaw marks on wood, disturbed insulation, or frayed wiring (a serious safety risk).",
         },
         {
           icon: TreePine,
-          title: 'Entry points getting worse',
+          title: "Entry points getting worse",
           description:
-            'Bent vents, torn screens, damaged soffits, or gaps that grow over time.',
+            "Bent vents, torn screens, damaged soffits, or gaps that grow over time.",
         },
       ],
     },
     {
-      id: 'outdoors',
-      label: 'Outdoors',
+      id: "outdoors",
+      label: "Outdoors",
       icon: TreePine,
       items: [
         {
           icon: Trash2,
-          title: 'Outdoor mess or disturbance',
+          title: "Outdoor mess or disturbance",
           description:
-            'Tipped trash cans, dug-up soil, or persistent tracks around decks, sheds, or garages.',
+            "Tipped trash cans, dug-up soil, or persistent tracks around decks, sheds, or garages.",
         },
         {
           icon: Shovel,
-          title: 'Yard damage patterns',
+          title: "Yard damage patterns",
           description:
-            'Raised tunnels, soft spots, or repeated digging (often points to burrowing activity).',
+            "Raised tunnels, soft spots, or repeated digging (often points to burrowing activity).",
         },
       ],
     },
@@ -160,49 +152,42 @@ export default function WildlifeRemovalPage() {
   return (
     <div className="flex flex-col">
       <section className="relative w-full pt-32 pb-16 md:pt-48 md:pb-24 bg-secondary">
-        {heroImage && (
-          <Image
-            src={heroImage.imageUrl}
-            alt={heroImage.description}
-            fill
-            className="object-cover"
-            priority
-            data-ai-hint={heroImage.imageHint}
-          />
-        )}
-        <div className="absolute inset-0 bg-black/50"></div>
+        <Image
+          src="/images/wildlife/wildfire-head.jpg"
+          alt="Wildlife removal header background."
+          fill
+          className="object-cover contrast-110 saturate-110"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/45"></div>
         <div className="container relative px-4 md:px-6 text-center text-white space-y-4">
-          <h1 className="text-4xl font-headline font-bold tracking-tighter sm:text-5xl md:text-6xl">
+          <h1 className="text-4xl font-headline font-bold tracking-tighter sm:text-5xl md:text-6xl drop-shadow-md">
             Humane Wildlife Removal
           </h1>
-          <p className="max-w-[700px] mx-auto text-lg md:text-xl">
+          <p className="max-w-[700px] mx-auto text-lg md:text-xl drop-shadow">
             Safely and effectively reclaim your home from unwanted wildlife guests.
           </p>
           <Button asChild size="lg" className="font-bold">
             <Link href="/contact">
-              Schedule Your Free Inspection{' '}
+              Schedule Your Free Inspection{" "}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
         </div>
       </section>
-
       <section id="services-grid">
         <div className="container px-4 md:px-6">
           <div className="grid lg:grid-cols-12 gap-10 items-start">
             <div className="lg:col-span-5">
               <div className="relative overflow-hidden rounded-2xl border bg-secondary shadow-xl">
                 <div className="relative aspect-[4/5]">
-                  {wildlifeSectionImage && (
-                    <Image
-                      src={wildlifeSectionImage.imageUrl}
-                      alt={wildlifeSectionImage.description}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 1024px) 100vw, 40vw"
-                      data-ai-hint={wildlifeSectionImage.imageHint}
-                    />
-                  )}
+                  <Image
+                    src="/images/wildlife/house.jpg"
+                    alt="Forest background for wildlife removal services."
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 p-6 space-y-4">
                     <div className="inline-flex items-center gap-2 rounded-full border bg-background/70 px-3 py-1 text-sm font-semibold backdrop-blur-sm">
@@ -260,8 +245,12 @@ export default function WildlifeRemovalPage() {
                     >
                       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br from-primary/10 via-transparent to-transparent" />
                       <div className="relative flex items-start gap-4">
-                        <div className="rounded-xl bg-secondary p-3">
-                          <animal.icon className="h-6 w-6 text-primary" />
+                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary">
+                          <EmojiIcon
+                            unified={animal.unified}
+                            label={animal.name}
+                            size={26}
+                          />
                         </div>
                         <div className="min-w-0">
                           <div className="flex items-center gap-2">
@@ -288,7 +277,8 @@ export default function WildlifeRemovalPage() {
                     </div>
                     <Button asChild className="font-bold">
                       <Link href="/contact">
-                        Get a Free Inspection <ArrowRight className="ml-2 h-4 w-4" />
+                        Get a Free Inspection{" "}
+                        <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
                   </CardContent>
@@ -298,7 +288,6 @@ export default function WildlifeRemovalPage() {
           </div>
         </div>
       </section>
-
       <section id="process" className="bg-secondary">
         <div className="container px-4 md:px-6">
           <div className="text-center space-y-4 mb-12">
@@ -306,8 +295,8 @@ export default function WildlifeRemovalPage() {
               Our Proven 4-Step Process
             </h2>
             <p className="max-w-[700px] mx-auto text-muted-foreground md:text-lg">
-              We follow a comprehensive process to ensure your wildlife problem is
-              solved for good.
+              We follow a comprehensive process to ensure your wildlife problem
+              is solved for good.
             </p>
           </div>
           <div className="grid lg:grid-cols-12 gap-10 items-start">
@@ -343,16 +332,13 @@ export default function WildlifeRemovalPage() {
             <div className="lg:col-span-5 lg:sticky lg:top-24">
               <Card className="overflow-hidden bg-background">
                 <div className="relative aspect-[4/3]">
-                  {heroImage && (
-                    <Image
-                      src={heroImage.imageUrl}
-                      alt={heroImage.description}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 1024px) 100vw, 40vw"
-                      data-ai-hint={heroImage.imageHint}
-                    />
-                  )}
+                  <Image
+                    src="/images/wildlife/wildfire-head.jpg"
+                    alt="Wildlife removal service overview."
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6">
                     <div className="inline-flex items-center gap-2 rounded-full border bg-background/70 px-3 py-1 text-sm font-semibold backdrop-blur-sm">
@@ -360,8 +346,8 @@ export default function WildlifeRemovalPage() {
                       Prevention-first approach
                     </div>
                     <p className="mt-3 text-sm text-muted-foreground">
-                      Removal is only half the job - exclusion and prevention stop
-                      repeat visits.
+                      Removal is only half the job - exclusion and prevention
+                      stop repeat visits.
                     </p>
                   </div>
                 </div>
@@ -389,7 +375,8 @@ export default function WildlifeRemovalPage() {
                   </div>
                   <Button asChild size="lg" className="w-full font-bold">
                     <Link href="/contact">
-                      Schedule a Free Inspection <ArrowRight className="ml-2 h-5 w-5" />
+                      Schedule a Free Inspection{" "}
+                      <ArrowRight className="ml-2 h-5 w-5" />
                     </Link>
                   </Button>
                 </CardContent>
@@ -405,7 +392,8 @@ export default function WildlifeRemovalPage() {
               Signs You Have a Wildlife Problem
             </h2>
             <p className="max-w-[700px] mx-auto text-muted-foreground md:text-lg">
-              Not sure if you have an unwanted visitor? Use this quick check to narrow it down.
+              Not sure if you have an unwanted visitor? Use this quick check to
+              narrow it down.
             </p>
           </div>
 
@@ -419,8 +407,9 @@ export default function WildlifeRemovalPage() {
                       Signal Check
                     </div>
                     <p className="mt-2 text-sm text-muted-foreground">
-                      These are the most common clues homeowners notice first. If something feels off,
-                      a fast inspection can prevent bigger damage.
+                      These are the most common clues homeowners notice first.
+                      If something feels off, a fast inspection can prevent
+                      bigger damage.
                     </p>
 
                     <div className="mt-6 relative mx-auto aspect-square w-full max-w-sm">
@@ -459,10 +448,13 @@ export default function WildlifeRemovalPage() {
                       <div className="flex items-start gap-3">
                         <AlertTriangle className="h-5 w-5 text-primary mt-0.5" />
                         <div>
-                          <p className="font-semibold">When to call right away</p>
+                          <p className="font-semibold">
+                            When to call right away
+                          </p>
                           <p className="mt-1 text-sm text-muted-foreground">
-                            If you suspect chewed wiring, strong odors, or active nesting, don't wait - these can
-                            escalate quickly.
+                            If you suspect chewed wiring, strong odors, or
+                            active nesting, don't wait - these can escalate
+                            quickly.
                           </p>
                         </div>
                       </div>
@@ -485,7 +477,11 @@ export default function WildlifeRemovalPage() {
 
                       {signCategories.map((category) => (
                         <TabsContent key={category.id} value={category.id}>
-                          <Accordion type="single" collapsible className="w-full">
+                          <Accordion
+                            type="single"
+                            collapsible
+                            className="w-full"
+                          >
                             {category.items.map((item, index) => (
                               <AccordionItem
                                 key={`${category.id}-${index}`}
@@ -517,7 +513,8 @@ export default function WildlifeRemovalPage() {
                       <div className="rounded-xl border bg-secondary p-4">
                         <p className="font-semibold">Avoid contact</p>
                         <p className="mt-1 text-sm text-muted-foreground">
-                          Keep kids and pets away from droppings and nesting areas.
+                          Keep kids and pets away from droppings and nesting
+                          areas.
                         </p>
                       </div>
                       <div className="rounded-xl border bg-secondary p-4">
@@ -530,7 +527,8 @@ export default function WildlifeRemovalPage() {
 
                     <Button asChild size="lg" className="mt-6 w-full font-bold">
                       <Link href="/contact">
-                        Book a Free Inspection <ArrowRight className="ml-2 h-5 w-5" />
+                        Book a Free Inspection{" "}
+                        <ArrowRight className="ml-2 h-5 w-5" />
                       </Link>
                     </Button>
                   </div>
@@ -539,6 +537,7 @@ export default function WildlifeRemovalPage() {
             </Card>
           </div>
         </div>
-      </section>    </div>
+      </section>{" "}
+    </div>
   );
 }

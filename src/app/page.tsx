@@ -13,6 +13,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { EmojiIcon } from '@/components/emoji-icon';
 import {
   COMPANY_NAME,
   PEST_SERVICES,
@@ -23,10 +24,37 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { EcoShieldIcon } from '@/components/icons/eco-shield-icon';
 
 export default function Home() {
-  const heroImage = PlaceHolderImages.find((img) => img.id === 'hero-home');
-  const whyChooseUsImage = PlaceHolderImages.find(
-    (img) => img.id === 'why-choose-us'
-  );
+  const getServiceEmoji = (item: string) => {
+    const text = item.toLowerCase();
+    if (text.includes('bat')) return '1f987';
+    if (text.includes('mice') || text.includes('mouse')) return '1f42d';
+    if (text.includes('rat')) return '1f400';
+    if (text.includes('squirrel')) return '1f43f-fe0f';
+    if (text.includes('raccoon')) return '1f99d';
+    if (text.includes('skunk')) return '1f9a8';
+    if (text.includes('snake')) return '1f40d';
+    if (text.includes('bird')) return '1f426';
+    if (text.includes('mole')) return '1f573-fe0f';
+    if (text.includes('opossum') || text.includes('possum')) return '1f43e';
+    if (text.includes('rabbit')) return '1f407';
+
+    if (text.includes('ant')) return '1f41c';
+    if (text.includes('roach')) return '1fab3';
+    if (text.includes('spider')) return '1f577-fe0f';
+    if (text.includes('wasp') || text.includes('hornet')) return '1f41d';
+    if (text.includes('bee')) return '1f41d';
+    if (text.includes('mosquito')) return '1f99f';
+    if (text.includes('fly')) return '1fab0';
+    if (text.includes('flea') || text.includes('tick')) return '1fab2';
+    if (text.includes('termite')) return '1f41c';
+    if (text.includes('bed bug') || text.includes('bedbug')) return '1f41e';
+    if (text.includes('beetle')) return '1fab2';
+    if (text.includes('cricket')) return '1f997';
+    if (text.includes('moth')) return '1f98b';
+    if (text.includes('slug') || text.includes('snail')) return '1f40c';
+
+    return '1f43e';
+  };
 
   const features = [
     {
@@ -58,7 +86,7 @@ export default function Home() {
         'Humane and effective removal of unwanted wildlife from your property.',
       link: '/wildlife-removal',
       items: WILDLIFE_SERVICES.slice(0, 4).map((s) => s.name),
-      image: PlaceHolderImages.find((img) => img.id === 'service-wildlife'),
+      image: { imageUrl: '/images/ui/wildlife-removal.jpg', description: 'Wildlife removal service.', imageHint: '' },
     },
     {
       title: 'Pest Control',
@@ -66,7 +94,7 @@ export default function Home() {
         'Comprehensive solutions for common household pests, tailored to your needs.',
       link: '/pest-control',
       items: PEST_SERVICES.slice(0, 4).map((s) => s.name),
-      image: PlaceHolderImages.find((img) => img.id === 'service-pests'),
+      image: { imageUrl: '/images/ui/pest-control.jpg', description: 'Pest control service.', imageHint: '' },
     },
   ];
 
@@ -100,17 +128,15 @@ export default function Home() {
             </div>
           </div>
           <div className="relative h-64 md:h-full w-full">
-            {heroImage && (
-              <Image
-                src={heroImage.imageUrl}
-                alt={heroImage.description}
-                fill
-                className="object-cover rounded-xl"
-                priority
-                data-ai-hint={heroImage.imageHint}
-              />
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent md:from-transparent md:bg-gradient-to-r"></div>
+            <Image
+              src="/images/ui/hero-img.jpg"
+              alt="Professional pest and wildlife control service."
+              fill
+              className="object-cover rounded-xl contrast-110 saturate-110 brightness-95"
+              priority
+            />
+            <div className="absolute inset-0 rounded-xl bg-black/10" />
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-background via-transparent to-transparent md:from-transparent md:bg-gradient-to-r" />
           </div>
         </div>
       </section>
@@ -119,16 +145,14 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-lg">
-              {whyChooseUsImage && (
-                <Image
-                  src={whyChooseUsImage.imageUrl}
-                  alt={whyChooseUsImage.description}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  data-ai-hint={whyChooseUsImage.imageHint}
-                />
-              )}
+              <Image
+                src="/images/ui/team.jpg"
+                alt="GreenShield team."
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+              />
             </div>
             <div className="space-y-6">
               <div className="flex items-center gap-3">
@@ -196,14 +220,19 @@ export default function Home() {
                   <p className="text-muted-foreground">
                     {service.description}
                   </p>
-                  <ul className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
-                    {service.items.map((item) => (
-                      <li key={item} className="flex items-center gap-2">
-                        <Leaf className="w-4 h-4 text-primary" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                   <ul className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+                     {service.items.map((item) => (
+                        <li key={item} className="flex items-center gap-2">
+                          <EmojiIcon
+                            unified={getServiceEmoji(item)}
+                            label={item}
+                            size={16}
+                            className="w-4 shrink-0"
+                          />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
                   <Button asChild variant="link" className="p-0">
                     <Link href={service.link}>
                       Learn More <ArrowRight className="ml-2 h-4 w-4" />
@@ -228,7 +257,7 @@ export default function Home() {
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {REVIEWS.map((review, index) => {
+            {REVIEWS.slice(0, 3).map((review, index) => {
               const avatarImage = PlaceHolderImages.find(
                 (img) => img.id === review.avatarId
               );
@@ -254,7 +283,11 @@ export default function Home() {
                           {[...Array(5)].map((_, i) => (
                             <Star
                               key={i}
-                              className="w-4 h-4 fill-yellow-400 text-yellow-400"
+                              className={`w-4 h-4 ${
+                                i < Math.round(review.rating ?? 5)
+                                  ? 'fill-yellow-400 text-yellow-400'
+                                  : 'text-muted-foreground/30'
+                              }`}
                             />
                           ))}
                         </div>
@@ -265,6 +298,13 @@ export default function Home() {
                 </Card>
               );
             })}
+          </div>
+          <div className="flex justify-center pt-6">
+            <Button asChild variant="outline" className="font-semibold">
+              <Link href="/reviews">
+                See More Reviews <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>

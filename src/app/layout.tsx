@@ -20,6 +20,10 @@ export const metadata: Metadata = {
     'humane wildlife removal',
     'family-owned pest service',
   ],
+  icons: {
+    icon: [{ url: '/icons/beetle.svg', type: 'image/svg+xml' }],
+    shortcut: ['/icons/beetle.svg'],
+  },
 };
 
 export default function RootLayout({

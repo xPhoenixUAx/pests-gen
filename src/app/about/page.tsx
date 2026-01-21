@@ -2,7 +2,6 @@ import Image from 'next/image';
 import { Leaf, Users, Heart, Target } from 'lucide-react';
 import type { Metadata } from 'next';
 
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { COMPANY_NAME } from '@/lib/constants';
 import { EcoShieldIcon } from '@/components/icons/eco-shield-icon';
 
@@ -12,8 +11,6 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  const heroImage = PlaceHolderImages.find((img) => img.id === 'hero-about');
-
   const values = [
     {
       icon: <Leaf className="w-8 h-8 text-primary" />,
@@ -35,22 +32,19 @@ export default function AboutPage() {
   return (
     <div className="flex flex-col">
       <section className="relative w-full pt-32 pb-16 md:pt-48 md:pb-24 bg-secondary">
-        {heroImage && (
-          <Image
-            src={heroImage.imageUrl}
-            alt={heroImage.description}
-            fill
-            className="object-cover"
-            priority
-            data-ai-hint={heroImage.imageHint}
-          />
-        )}
-        <div className="absolute inset-0 bg-black/50"></div>
+        <Image
+          src="/images/ui/header-about.jpg"
+          alt="About us header background."
+          fill
+          className="object-cover contrast-110 saturate-110"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/40"></div>
         <div className="container relative px-4 md:px-6 text-center text-white space-y-4">
-          <h1 className="text-4xl font-headline font-bold tracking-tighter sm:text-5xl md:text-6xl">
+          <h1 className="text-4xl font-headline font-bold tracking-tighter sm:text-5xl md:text-6xl drop-shadow-md">
             Your Local, Family-Owned Experts
           </h1>
-          <p className="max-w-[700px] mx-auto text-lg md:text-xl">
+          <p className="max-w-[700px] mx-auto text-lg md:text-xl drop-shadow">
             Get to know the team dedicated to protecting your home.
           </p>
         </div>
@@ -77,11 +71,10 @@ export default function AboutPage() {
             </div>
             <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-lg">
               <Image
-                src="https://picsum.photos/seed/familyphoto/800/600"
-                alt="A smiling family, representing the founders"
+                src="/images/ui/about-head.jpg"
+                alt="A team of two friendly pest control technicians smiling."
                 fill
                 className="object-cover"
-                data-ai-hint="family portrait"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
